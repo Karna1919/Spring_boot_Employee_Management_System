@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Employee Details</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        height: 100vh;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .container {
+        width: 90%;
+        margin: auto;
+        margin-top: 30px;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
+        animation: slideUp 1s ease;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(40px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 6px #00c6ff; }
+        to { text-shadow: 0 0 16px #0072ff; }
+    }
+
+    input {
+        padding: 12px;
+        width: 60%;
+        border-radius: 8px;
+        border: 1px solid #bbb;
+        margin-right: 10px;
+        transition: 0.3s;
+    }
+
+    input:focus {
+        border-color: #0072ff;
+        box-shadow: 0 0 8px #0072ff;
+    }
+
+    .btn-search {
+        padding: 12px 18px;
+        border: none;
+        background: #0072ff;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-search:hover {
+        background: #005ad1;
+        transform: scale(1.05);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        animation: fadeIn 2s ease;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    th {
+        background: #0072ff;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background: #f0f7ff;
+    }
+
+    tr:hover {
+        background: #d8eaff;
+        transition: 0.3s;
+    }
+
+    .btn-action {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .update {
+        background: #ff9800;
+    }
+
+    .update:hover {
+        background: #e68a00;
+        transform: scale(1.08);
+    }
+
+    .delete {
+        background: #e53935;
+    }
+
+    .delete:hover {
+        background: #c62828;
+        transform: scale(1.08);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Employee Details</h1>
+
+    <center>
+        <form action="filterby">
+            <input placeholder="Search by Name / Email / Gender / Address" name="filter" />
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+    </center>
+
+    <table>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Employee Email</th>
+            <th>Mobile Number</th>
+            <th>Salary</th>
+            <th>Dept No</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th colspan="2">Actions</th>
+        </tr>
+
+        <tr th:each="employee : ${allemployeedetails}">
+            <td th:text="${employee.empid}"></td>
+            <td th:text="${employee.empname}"></td>
+            <td th:text="${employee.empemailid}"></td>
+            <td th:text="${employee.mobilenumber}"></td>
+            <td th:text="${employee.salary}"></td>
+            <td th:text="${employee.deptno}"></td>
+            <td th:text="${employee.gender}"></td>
+            <td th:text="${employee.address}"></td>
+
+            <td>
+                <form action="getbyusingid">
+                    <input th:value="${employee.empid}" hidden name="empid" />
+                    <button class="btn-action update" type="submit">Update</button>
+                </form>
+            </td>
+
+            <td>
+                <form action="deletebyid">
+                    <input th:value="${employee.empid}" hidden name="empid" />
+                    <button class="btn-action delete" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>
